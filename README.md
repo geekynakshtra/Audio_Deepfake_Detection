@@ -13,7 +13,7 @@ Features
 
  Model
 
-- Model Used:** [`mo-thecreator/wav2vec2-base-finetuned`](https://huggingface.co/mo-thecreator/wav2vec2-base-finetuned)
+- Model Used:[`mo-thecreator/wav2vec2-base-finetuned`](https://huggingface.co/mo-thecreator/wav2vec2-base-finetuned)
 - Task: Audio deepfake detection (bonafide vs spoof)
 - Framework: PyTorch + Hugging Face Transformers + torchaudio
 
