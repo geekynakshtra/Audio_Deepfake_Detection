@@ -10,7 +10,6 @@ class AudioDeepfakeDetector:
         self.model.eval()
 
     def predict(self, audio_path):
-        # Load audio and resample if needed
         speech, sr = torchaudio.load(audio_path)
         if sr != 16000:
             resampler = torchaudio.transforms.Resample(orig_freq=sr, new_freq=16000)
