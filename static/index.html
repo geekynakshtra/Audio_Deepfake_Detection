@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Audio Deepfake Detector</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 { text-align: center; }
+    .result { margin-top: 1rem; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>🎙️ Audio Deepfake Detector</h1>
+  <form id="uploadForm">
+    <input type="file" name="file" accept="audio/*" required />
+    <button type="submit">Analyze</button>
+  </form>
+  <div class="result" id="result"></div>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    const resultDiv = document.getElementById('result');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fileInput = form.querySelector('input[type="file"]');
+      const file = fileInput.files[0];
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      resultDiv.textContent = "Analyzing...";
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/predict/", {
+          method: "POST",
+          body: formData
+        });
+
+        if (!response.ok) throw new Error("Server error");
+
+        const data = await response.json();
+        resultDiv.textContent = `Prediction: ${data.label} (Confidence: ${(data.confidence * 100).toFixed(2)}%)`;
+      } catch (error) {
+        resultDiv.textContent = "Error: " + error.message;
+      }
+    });
+  </script>
+</body>
+</html>
